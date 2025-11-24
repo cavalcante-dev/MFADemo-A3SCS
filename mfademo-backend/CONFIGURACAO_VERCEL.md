@@ -129,6 +129,19 @@ Após configurar, verifique:
 
 ## 🐛 Troubleshooting
 
+### Erro "Invalid character found in method name" / "HTTP method names must be tokens"
+
+**Sintoma:** Logs mostram erro sobre parsing HTTP com caracteres inválidos.
+
+**Causa:** O servidor HTTP está recebendo requisições HTTPS (handshake TLS). Isso acontece quando:
+- Alguém tenta acessar `https://localhost:8080` diretamente no navegador
+- O frontend HTTPS tenta acessar o backend HTTP local (sem túnel)
+
+**Solução:** 
+- Este erro é apenas um warning e não quebra a aplicação
+- Os logs foram configurados para suprimir esse warning (ver `application.properties`)
+- Para produção, use um túnel HTTPS (ngrok) ou faça deploy do backend com HTTPS
+
 ### Erro de CORS
 - Verifique se a URL do frontend está na lista de origens permitidas
 - Verifique se o backend está usando `corsConfigurationSource` no `SecurityConfig`
